@@ -11,6 +11,19 @@ export default {
       'MintGreen' : '#C9EDDC',
       'DimGray' : '#6A706E',
       'white' : '#FFFFFF',
+      'a' : '#333333',
+      'bColor' : '#FF4B2B',
+      'MintGreen' : '#D7FDF0',
+      'LoginBack' : '#F1F7ED',
+      'LoginBackGround' : '#5C5D67',
+      'black' : '#000000',
+    },
+    fontFamily: {
+      'sans' : 'Montserrat',
+    },
+    backgroundImage: {
+      'hero-pattern': "url('https://thumbs.dreamstime.com/b/medical-staff-clinic-banner-copy-space-right-side-hospital-healthcare-background-87324362.jpg ')",
+      // 'footer-texture': "url('/img/footer-texture.png')",
     },
   
     // colors:{
