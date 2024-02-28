@@ -5,12 +5,15 @@ import React, { useState } from 'react'
 // import { BsCalendar2MonthFill } from 'react-icons/bs';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import Navbar from "../navbar/Navbar";
 
 
 function BookAppointment() {
   // const [startDate, setStartDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null)
   return (
+    <>
+    <Navbar/>
     <div className='flex justify-center items-center' >
       {/* <label htmlFor="">Choose date for Treatment</label> */}
       <DatePicker selected={selectedDate} onChange={ date => setSelectedDate(date)}
@@ -20,6 +23,7 @@ function BookAppointment() {
       showMonthDropdown
       />
     </div>
+    </>
   )
 }
 

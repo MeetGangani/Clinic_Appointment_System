@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Newsitem from "./Newsitem";
-// import Spinner from "./Spinner";
-import PropTypes from "prop-types";
+import Spinner from "./Spinner";
+import PropTypes, { element } from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
-function News() {
 
+import Navbar from "../navbar/Navbar";
+
+
+function News(props) {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -20,7 +23,7 @@ function News() {
   // }
 
   const updateNews = async () => {
-    const url = `https://newsapi.org/v2/top-headlines?country=in&category=health&apiKey=f82887cc76c041428e32cafe69cd060e&page=5&pageSize=5`;
+    const url = `https://newsapi.org/v2/top-headlines?country=in&category=health&apiKey=f82887cc76c041428e32cafe69cd060e&page=${page}&pageSize=${props.pageSize}`;
 
     setLoading(true);
 
@@ -29,8 +32,8 @@ function News() {
     let parsedData = await data.json();
 
     setArticles(parsedData.articles);
-    setLoading(false);
     setTotalResults(parsedData.totalResults);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -38,9 +41,9 @@ function News() {
   }, []);
 
   const fetchMoreData = async () => {
-      const url = `https://newsapi.org/v2/top-headlines?country=in&category=health&apiKey=f82887cc76c041428e32cafe69cd060e&page=5&pageSize=5`;
-      setPage(page + 1);    
-      
+    const url = `https://newsapi.org/v2/top-headlines?country=in&category=health&apiKey=f82887cc76c041428e32cafe69cd060e&page=${page+1}&pageSize=${props.pageSize}`;
+    setPage(page + 1);
+
     let data = await fetch(url);
     let parsedData = await data.json();
 
@@ -49,13 +52,39 @@ function News() {
     // setLoading(false)
   };
   return (
-    <div className="container mx-auto sm:px-4 my-4 gx-3 flex ">
-      {/* {loading && <Spinner />} */}
-    
-      <div className="row flex">
+    // <div className="container mx-auto sm:px-4 my-4 gx-3 flex ">
+    //   {/* {loading && <Spinner />} */}
+
+    //   <div className="flex">
+    //     {articles.map((element) => {
+    //       return (
+    //         <div className="md:w-1/3 pr-4 pl-4 " key={element.url}>
+    //           <Newsitem
+    //             title={element.title ? element.title : ""}
+    //             description={element.description ? element.description : ""}
+    //             imgurl={element.urlToImage}
+    //             newsurl={element.url}
+    //             author={element.author}
+    //             date={element.publishedAt}
+    //           />
+    //         </div>
+    //       );
+    //     })}
+    //   </div>
+    //   <InfiniteScroll
+    //     dataLength={articles.length}
+    //     next={fetchMoreData}
+    //     hasMore={articles.length !== totalResults}
+    //     // loader={<Spinner />}
+    //   ></InfiniteScroll>
+    // </div>
+    <>
+    <Navbar/>
+    <div className=" w-5/6 my-0 mx-auto p-12">
+      <div className=" grid grid-cols-3 gap-[25px]">
         {articles.map((element) => {
           return (
-            <div className="md:w-1/3 pr-4 pl-4 " key={element.url}>
+            <div className=" rounded p-5" key={element.url}>
               <Newsitem
                 title={element.title ? element.title : ""}
                 description={element.description ? element.description : ""}
@@ -68,6 +97,7 @@ function News() {
           );
         })}
       </div>
+      
       <InfiniteScroll
         dataLength={articles.length}
         next={fetchMoreData}
@@ -75,11 +105,21 @@ function News() {
         // loader={<Spinner />}
       ></InfiniteScroll>
     </div>
+    </>
   );
-};
+}
 
-export default News
+News.defaultProps = {
+ 
+  pageSize: 8
+}
+News.propTypes = {
+ 
+  pageSize: PropTypes.number
+ 
+}
 
+export default News;
 
 // import React, {useEffect, useState} from 'react'
 // // import NewsItem from './Newsitems'
@@ -94,13 +134,13 @@ export default News
 //     const [loading, setLoading] = useState(true)
 //     const [page, setPage] = useState(1)
 //     const [totalResults, setTotalResults] = useState(0)
-    
+
 //     const capitalizeFirstLetter = (string) => {
 //         return string.charAt(0).toUpperCase() + string.slice(1);
-//     } 
+//     }
 
 //     const updateNews = async ()=> {
-//         const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`; 
+//         const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
 //         setLoading(true)
 //         let data = await fetch(url);
 //         let parsedData = await data.json()
@@ -111,20 +151,19 @@ export default News
 
 //     useEffect(() => {
 //         document.title = `${capitalizeFirstLetter(props.category)} - NewsMonkey`;
-//         updateNews(); 
+//         updateNews();
 //         // eslint-disable-next-line
 //     }, [])
 
-
-//     const fetchMoreData = async () => {   
+//     const fetchMoreData = async () => {
 //         const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page+1}&pageSize=${props.pageSize}`;
-//         setPage(page+1) 
+//         setPage(page+1)
 //         let data = await fetch(url);
 //         let parsedData = await data.json()
 //         setArticles(articles.concat(parsedData.articles))
 //         setTotalResults(parsedData.totalResults)
 //       };
- 
+
 //         return (
 //             <>
 //                 <h1 className="text-center" style={{ margin: '35px 0px', marginTop: '90px' }}>NewsMonkey - Top {capitalizeFirstLetter(props.category)} Headlines</h1>
@@ -134,9 +173,9 @@ export default News
 //                     next={fetchMoreData}
 //                     hasMore={articles.length !== totalResults}
 //                     loader={<Spinner/>}
-//                 > 
+//                 >
 //                     <div className="container">
-                         
+
 //                     <div className="row">
 //                         {articles.map((element) => {
 //                             return <div className="col-md-4" key={element.url}>
@@ -144,13 +183,12 @@ export default News
 //                             </div>
 //                         })}
 //                     </div>
-//                     </div> 
+//                     </div>
 //                 </InfiniteScroll>
 //             </>
 //         )
-    
-// }
 
+// }
 
 // News.defaultProps = {
 //     country: 'in',
