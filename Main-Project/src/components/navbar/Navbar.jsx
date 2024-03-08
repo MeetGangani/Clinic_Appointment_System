@@ -1,9 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 // import LoginButton from "../main/LoginButton";
 // import LogoutButton from "../main/LogoutButton";
 
-function Navbar() {
+function Navbar(props) {
+  let isLoggedIn = props.isLoggedIn;
+  let setIsLoggedIn = props.setIsLoggedIn;
+
+  const navigate = useNavigate();
   return (
     <div className="flex bg-[#563c5c] text-white p-4 sticky top-0">
       <div className=" justify-center ml-auto  ">
@@ -36,31 +41,24 @@ function Navbar() {
       </div>
 
       <div className="ms-auto bg-[#D7FDF0] hover:bg-CambridgeBlue font-bold text-EnglishViolet rounded-md p-2 px-6 flex space-x-3 ">
-        
-        {/* <div className=""><Link to='/Login'>Login</Link></div> */}
-
-        <div className=" text-gray-700"><Link to="/register">Register</Link></div>
+        {isLoggedIn && (
+          <button className=" text-gray-700 cursor-pointer">Log In</button>
+        )}
+        {!isLoggedIn && (
+          <button
+            onClick={() => {
+              toast.success("Logged Out Successfully");
+              navigate('/login')
+              
+            }}
+            className=" text-gray-700 cursor-pointer"
+          >
+            Log Out
+          </button>
+        )}
       </div>
-      {/* <div className=" ms-auto flex  space-x-5">
-        <LoginButton />
-        <LogoutButton />
-      </div> */}
     </div>
-    //  </div>
   );
 }
 
 export default Navbar;
-{
-  /* <div className="bg-[#D7FDF0] hover:bg-CambridgeBlue font-bold text-EnglishViolet rounded-md p-2 px-3 cursor-pointer">
-          <Link to='/Login'>
-          Get Started
-          </Link> */
-}
-{
-  /* <div className="bg-[#D7FDF0] hover:bg-CambridgeBlue font-bold text-EnglishViolet rounded-md p-2 px-3 cursor-pointer">
-          <Link to='#'>
-          SignUp
-          </Link>
-        </div> */
-}

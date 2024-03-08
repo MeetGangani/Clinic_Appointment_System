@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const User = require("../Models/User");
 require('dotenv').config();
+const crypto = require('crypto');
+const { error } = require('console');
 //signup
 exports.signup = async (req, res) => {
     try {
@@ -47,45 +49,90 @@ exports.signup = async (req, res) => {
 
 
 exports.login = async (req, res) => {
-    try{
-    const { email, password } = req.body;
+    try {
+        const { email, password } = req.body;
 
-    if (!email || !password) {
-        return res.status(400).json({
-            success: false, message: "please fill all the details"
-        });
-    }
-    const user = await User.findOne({ email });
-
-    if (!user) {
-        return res.status(401).json({ success: false, message: "User not found" });
-    }
-
-    const payload = {
-        email: user.email
-
-    }
-
-    if (await bcrypt.compare(password, user.password)) {
-        let token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "2h", });
-        user.token = token;
-        user.password = undefined;
-
-
-        const options = {
-            expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-            httpOnly: true
+        if (!email || !password) {
+            return res.status(400).json({
+                success: false, message: "please fill all the details"
+            });
         }
-        res.cookie("token", token, options).status(200).json({ success: true, token, user, message: "User logged in successfully" });
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(401).json({ success: false, message: "User not found" });
+        }
+
+        const payload = {
+            email: user.email
+
+        }
+
+        if (await bcrypt.compare(password, user.password)) {
+            let token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "2h", });
+            user.token = token;
+            user.password = undefined;
 
 
+            const options = {
+                expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+                httpOnly: true
+            }
+            res.cookie("token", token, options).status(200).json({ success: true, token, user, message: "User logged in successfully" });
+
+
+        }
+        else {
+            return res.status(403).json({ success: false, message: "Invalid password" });
+        }
     }
-    else {
-        return res.status(403).json({ success: false, message: "Invalid password" });
-    }
-    }
-    catch(err){
+    catch (err) {
         console.log(err);
-        return res.status(500).json({ success: false, message:"Login failed" });
+        return res.status(500).json({ success: false, message: "Login failed" });
     }
 }
+
+exports.resetpass =  (req, res) => {
+    const { email } = req.body;
+
+    crypto.randomBytes(20, (err, buf) => {
+        const token = buf.toString('hex');
+
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+
+            auth: {
+                user: "healtheasy96@gmail.com",
+                pass: "muqkjsxkoissazob",
+            }
+        })
+
+        const mailOptions = {
+            from: 'healtheasy96@gmail.com',
+            to: email,
+            subject: 'Password Reset',
+            text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+                'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+        };
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (error) {
+                console.log(error);
+                res.status(500).send('Error sending email');
+            } else {
+                console.log('Email sent: ' + info.response);
+                res.status(200).send('Password reset email sent');
+            }
+        });
+    });
+
+    res.redirect('/forgotpasswordconfirmation');
+
+
+   
+}
+
+// exports.tokenverify =  (req,res)=> {
+//     User.findOne({})
+// }

@@ -1,31 +1,37 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+
 import { data } from "autoprefixer";
 import Notification from "../../notifications/Notification";
-
+import toast from "react-hot-toast";
 function Register() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   let registrationSuccess = false;
   const [password, setPassword] = useState("");
 
-// const checkres =  (e) =>
-// {
-//   if(e.status === 200)
-//   {
-//     window.alert("Registration Success")
-//   }
-//  else if(err.status === 400)
-//   {
-//     window.alert('User already registered')
-//   }
-//   else if(err.status === 500)
-//   {
-//     window.alert("User Creation Failed")
-//   }
-// }
-
+  // function notify() {
+  //   toast("Registration Successfull");
+  // }
+  // const checkres =  (e) =>
+  // {
+  //   if(e.status === 200)
+  //   {
+  //     window.alert("Registration Success")
+  //   }
+  //  else if(err.status === 400)
+  //   {
+  //     window.alert('User already registered')
+  //   }
+  //   else if(err.status === 500)
+  //   {
+  //     window.alert("User Creation Failed")
+  //   }
+  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,79 +48,31 @@ function Register() {
         email,
         password,
       },
-    
-
-     
-  })
-      // Handle the response from backend here
+    })
       .then((res) => {
         if (res.status === 200) {
-          window.alert('Registration successful!');
-        } else {
-          window.alert('User already exists!');
+          toast.success("Registration Success");
+          navigate("/login");
         }
-        // checkres(res);
-        // registrationSuccess = true;
-        // if(res.status === 200)
-        // {
-        //   // registrationSuccess = true;
-        //   window.alert("Successfully Registered")
-        //   navigate("/login");
-        // }
-        // displayOutput(res);
-        
       })
-      
-      // Catch errors if any
       .catch((err) => {
-        // window.alert("error while creating user!");
+        if(err.response.status === 401)
+        {
+          toast.error("Invalid Email Address")
+        }
+        if(err.response.status === 402)
+        {
+          toast.error("Password should be strong")
+        }
+
+        if (err.response.data["success"] == false) {
+          // window.alert(err.response.data["message"]);
+          toast.error("User Already Registered")
+        }
+
         console.log(err);
       });
-
-      // if(registrationSuccess)
-      // {
-      //   window.alert("Successfully Registered")
-      //     navigate("/login");
-      // }
-      
-     
-    // const configuration = {
-    //   method: "post",
-    //   url: "http://localhost:3000/api/v1/signup",
-    //   data: {
-    //     email,
-    //     password,
-    //   },
-    // };
-
-    //  axios(configuration).then( (res) => {
-    //   if(res === 200)
-    //   {
-    //     window.alert("Successfully registered");
-    //       navigate("/login");
-    //   }
-    //   else{
-    //     window.alert("Error Occured!!");
-    //   }
-    // }).catch((err)=> {
-    //   window.alert("AXIOS ERROR")
-    // });
-      // .then((result) => {
-      //   if (result.status === 200) {
-      //     window.alert("Successfully registered");
-      //     navigate("/login");
-      //   }
-      //  else if (result.status === 400) {
-      //     window.alert("User already registered");
-      //   } else {
-      //     window.alert("Failed to register");
-      //   }
-      // })
-      // .catch((error) => {
-      //   window.alert("Axios fetch error");
-
-      //   console.log(error);
-      // });
+  
   };
 
   return (
@@ -144,25 +102,38 @@ function Register() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required=""
+                  required
                 />
               </div>
-              <div className=" text-left">
+              <div className="">
                 <label
                   htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Password
                 </label>
+                <div className="flex items-center bg-gray-50 rounded-lg border border-gray-300 focus:ring-[#2563eb] focus:border-[#2563eb] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <input
-                  type="password"
-                  name="password"
+                    type={showPassword ? "text" : "password"}
+                    name="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   id="password"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required=""
+                  className="bg-gray-50 text-gray-900 sm:text-sm rounded-lg w-full p-2.5 outline-none"
+                  required
                 />
+                <span
+                    className=" mr-1"
+
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? (
+                      <AiOutlineEyeInvisible style={{ width: '24px', height: '24px' }}/>
+                    ) : (
+                      <AiOutlineEye style={{ width: '24px', height: '24px' }}/>
+                    )}{" "}
+                  </span>
+                </div>
               </div>
               {/* <div className=" text-left">
                 <label
@@ -187,12 +158,13 @@ function Register() {
                     aria-describedby="terms"
                     type="checkbox"
                     className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                    required=""
+                    required
                   />
                 </div>
                 <div className="ml-3 text-sm">
                   <label
-                    htmlFor="terms" required 
+                    htmlFor="terms"
+                    required
                     className="font-light text-gray-500 dark:text-gray-300"
                   >
                     I accept the{" "}
@@ -212,6 +184,7 @@ function Register() {
               >
                 Create an account
               </button>
+
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
                 <a

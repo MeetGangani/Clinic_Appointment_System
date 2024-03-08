@@ -1,106 +1,27 @@
 import React from "react";
 import Navbar from "../navbar/Navbar";
-function Home() {
+import Footer from "../footer/Footer";
+import { useNavigate } from "react-router-dom";
+
+function Home(props) {
+
+  const navigate = useNavigate();
   return (
     <>
-    <Navbar></Navbar>
-    <div id="animation-carousel" class="relative w-full" data-carousel="static">
-      {/* <!-- Carousel wrapper --> */}
-      <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-        {/* <!-- Item 1 --> */}
-        <div class="hidden duration-200 ease-linear" data-carousel-item>
-          <img
-            src="/docs/images/carousel/carousel-1.svg"
-            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-            alt="..."
-          />
-        </div>
-        {/* <!-- Item 2 --> */}
-        <div class="hidden duration-200 ease-linear" data-carousel-item>
-          <img
-            src="/docs/images/carousel/carousel-2.svg"
-            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-            alt="..."
-          />
-        </div>
-        {/* <!-- Item 3 --> */}
-        <div
-          class="hidden duration-200 ease-linear"
-          data-carousel-item="active"
-        >
-          <img
-            src="/docs/images/carousel/carousel-3.svg"
-            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-            alt="..."
-          />
-        </div>
-        {/* <!-- Item 4 --> */}
-        <div class="hidden duration-200 ease-linear" data-carousel-item>
-          <img
-            src="/docs/images/carousel/carousel-4.svg"
-            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-            alt="..."
-          />
-        </div>
-        {/* <!-- Item 5 --> */}
-        <div class="hidden duration-200 ease-linear" data-carousel-item>
-          <img
-            src="/docs/images/carousel/carousel-5.svg"
-            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-            alt="..."
-          />
-        </div>
+    <Navbar ></Navbar>
+
+    <section class=" h-screen bg-[url('https://i.postimg.cc/sgH5hBXW/bg.jpg')]  w-full   bg-center bg-cover  flex items-center  ">
+
+      <div class="max-w-[1200px] w-full text-black mx-auto my-0">
+        <h2 className="text-5xl max-w-[600px] leading-[70px]">welcome to all dear patient</h2>
+        <p className="font-light max-w-[600px] mt-[15px]">
+          here we are happy to help. for the patient who is weak economically we give them discount of 30% off..
+        </p>
+        <button onClick={()=> navigate('/bookappointment')} className=" text-base cursor-pointer font-medium  mt-[38px] px-[30px] py-3 rounded-md border-[none] bg-[#8AFFC1] hover:bg[#9F4A54]">Book Appointment Now</button>
       </div>
-      {/* <!-- Slider controls --> */}
-      <button
-        type="button"
-        class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-        data-carousel-prev
-      >
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-          <svg
-            class="w-4 h-4 text-black dark:text-gray-800 rtl:rotate-180"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 6 10"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M5 1 1 5l4 4"
-            />
-          </svg>
-          <span class="sr-only">Previous</span>
-        </span>
-      </button>
-      <button
-        type="button"
-        class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-        data-carousel-next
-      >
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-          <svg
-            class="w-4 h-4 text-black dark:text-gray-800 rtl:rotate-180"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 6 10"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="m1 9 4-4-4-4"
-            />
-          </svg>
-          <span class="sr-only">Next</span>
-        </span>
-      </button>
-    </div>
+    </section>
+
+    <Footer/>
     </>
     // <div className='flex h-[665px] meet text-center '>
     //     <div >

@@ -1,54 +1,57 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import Home from "../Home";
+import Navbar from "../../navbar/Navbar";
 
-function Login() {
+
+function Login({setIsLoggedIn, isLoggedIn}) {
+
+
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     axios({
-      // Endpoint to send files
       url: "http://localhost:3000/api/v1/login",
       method: "POST",
       data: {
         email,
         password,
       },
-    
-
-     
-  })
-      // Handle the response from backend here
+    })
       .then((res) => {
-        if(res.status === 200)
-        {
-          window.alert("User logged in successfully")
-          navigate("/home");
-        }
-        if(res.status === 401)
-        {
-          window.alert('User not found')
-        }
-        if(res.status === 403)
-        {
-          window.alert('Invalid password')
-        }
-        if(res.status === 500)
-        {
-          window.alert("Login failed")
+        if (res.status === 200) {
+          toast.success("User Logged in successfully");
+          setIsLoggedIn = true;
+          navigate("/home" , {setIsLoggedIn, isLoggedIn});
+
+          // <Navbar IsLoggedIn = "true"/>
         }
       })
 
-      // Catch errors if any
       .catch((err) => {
-        console.log(err);
+        // if(err.status === 401)
+        // {
+        //   toast.error("User not Registered")
+        // }
+        // if(err.status === 403)
+        // {
+        //   window.alert('Invalid password')
+        // }
+        // if(err.status === 500)
+        // {
+        //   window.alert("Login failed")
+        // }
+        toast.error("Email or Password incorrect");
       });
-
-
 
 
     // const configuration = {
@@ -68,7 +71,7 @@ function Login() {
     //     }
     //     else if(result.status === 400) {
     //         window.alert("Please fill the data first!!")
-    //     } 
+    //     }
     //     else {
     //       window.alert("Failed to Login");
     //     }
@@ -105,27 +108,44 @@ function Login() {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="name@company.com"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-[#2563eb] focus:border-[#2563eb] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                  placeholder="Enter Email id"
                 />
               </div>
-              <div className=" text-left">
+              <div className="">
                 <label
                   htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Password
                 </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required=""
-                />
+                <div className="flex items-center bg-gray-50 rounded-lg border border-gray-300 focus:ring-[#2563eb] focus:border-[#2563eb] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  {/*  */}
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="bg-gray-50 text-gray-900 sm:text-sm rounded-lg w-full p-2.5 outline-none"
+                    required
+                    placeholder="Enter Password"
+                    />
+                  <span
+                    className=" mr-1"
+
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? (
+                      <AiOutlineEyeInvisible style={{ width: '24px', height: '24px' }}/>
+                    ) : (
+                      <AiOutlineEye style={{ width: '24px', height: '24px' }}/>
+                    )}{" "}
+                  </span>
+                </div>
               </div>
+            
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
@@ -133,7 +153,7 @@ function Login() {
                       id="remember"
                       aria-describedby="remember"
                       type="checkbox"
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-[#93c5fd] dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-[#2563eb] dark:ring-offset-gray-800"
                       required=""
                     />
                   </div>
@@ -148,7 +168,7 @@ function Login() {
                 </div>
                 <a
                   href="#"
-                  className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  className="text-sm font-medium text-[#2563eb] hover:underline dark:text-[#3b82f6]"
                 >
                   Forgot password?
                 </a>
@@ -164,7 +184,7 @@ function Login() {
                 Don't have an account yet?{" "}
                 <a
                   href="/"
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  className="font-medium text-[#2563eb] hover:underline dark:text-[#3b82f6]"
                 >
                   Sign up
                 </a>

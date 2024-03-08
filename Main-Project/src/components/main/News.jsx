@@ -3,7 +3,7 @@ import Newsitem from "./Newsitem";
 import Spinner from "./Spinner";
 import PropTypes, { element } from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
-
+import Footer from "../footer/Footer";
 import Navbar from "../navbar/Navbar";
 
 
@@ -104,7 +104,7 @@ function News(props) {
         hasMore={articles.length !== totalResults}
         // loader={<Spinner />}
       ></InfiniteScroll>
-    </div>
+    </div>    <Footer/>
     </>
   );
 }

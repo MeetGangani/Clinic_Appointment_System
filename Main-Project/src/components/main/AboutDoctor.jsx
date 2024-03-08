@@ -1,12 +1,14 @@
 import React from 'react'
 import Navbar from '../navbar/Navbar'
+import Footer from "../footer/Footer";
 function AboutDoctor() {
   return (
     <>
     <Navbar/>
-    <div>
-      Doctor Info
-    </div>
+
+
+
+   <Footer/>
     </>
   )
 }
