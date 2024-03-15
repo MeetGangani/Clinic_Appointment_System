@@ -7,16 +7,35 @@ const crypto = require('crypto');
 const { error } = require('console');
 //signup
 exports.signup = async (req, res) => {
+    function validateEmail(email) {
+        const re = /\S+@\S+\.\S+/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    // Validate password function
+    function isStrongPassword(password) {
+        const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+        return re.test(password);
+    }
     try {
         const { email, password } = req.body;
 
         const existUser = await User.findOne({ email });
+
+        
 
         if (existUser) {
             return res.status(409).json({
                 success: false,
                 message: "already existing user",
             })
+        }
+        if (!validateEmail(email)) {
+            return res.status(401).json({ message: 'Invalid email address' });
+        }
+
+        if (!isStrongPassword(password)) {
+            return res.status(402).json({ message: 'Password should be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character' });
         }
         let hashedpassword;
         try {
@@ -92,7 +111,7 @@ exports.login = async (req, res) => {
     }
 }
 
-exports.resetpass =  (req, res) => {
+exports.resetpass = (req, res) => {
     const { email } = req.body;
 
     crypto.randomBytes(20, (err, buf) => {
@@ -130,8 +149,9 @@ exports.resetpass =  (req, res) => {
     res.redirect('/forgotpasswordconfirmation');
 
 
-   
+
 }
+
 
 // exports.tokenverify =  (req,res)=> {
 //     User.findOne({})

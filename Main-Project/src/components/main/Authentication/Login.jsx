@@ -16,6 +16,8 @@ function Login({setIsLoggedIn, isLoggedIn}) {
 
   const [showPassword, setShowPassword] = useState(false);
 
+let serverres = false;
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -29,6 +31,7 @@ function Login({setIsLoggedIn, isLoggedIn}) {
     })
       .then((res) => {
         if (res.status === 200) {
+          serverres = true;
           toast.success("User Logged in successfully");
           setIsLoggedIn = true;
           navigate("/home" , {setIsLoggedIn, isLoggedIn});
@@ -38,22 +41,31 @@ function Login({setIsLoggedIn, isLoggedIn}) {
       })
 
       .catch((err) => {
-        // if(err.status === 401)
-        // {
-        //   toast.error("User not Registered")
-        // }
-        // if(err.status === 403)
-        // {
-        //   window.alert('Invalid password')
-        // }
-        // if(err.status === 500)
-        // {
-        //   window.alert("Login failed")
-        // }
-        toast.error("Email or Password incorrect");
+        serverres = true;
+        if(err.response.status === 400)
+        {
+          toast.error("Fill all fields");
+          }
+        if(err.response.status === 401)
+        {
+                  toast.error("User not registered");
+        }
+        if(err.response.status === 403)
+        {
+                  toast.error("Invalid password");
+        }
+        if(err.response.status === 500)
+        {
+                  toast.error("Login failed");
+        }
+      
       });
 
+if(!serverres)
+{
 
+  toast.err("Server not responding");
+}
     // const configuration = {
     //   method: "post",
     //   url: "http://localhost:3000/login",
@@ -166,8 +178,9 @@ function Login({setIsLoggedIn, isLoggedIn}) {
                     </label>
                   </div>
                 </div>
+                
                 <a
-                  href="#"
+                  href="/resetpswd"
                   className="text-sm font-medium text-[#2563eb] hover:underline dark:text-[#3b82f6]"
                 >
                   Forgot password?

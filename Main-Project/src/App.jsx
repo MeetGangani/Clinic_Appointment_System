@@ -15,6 +15,7 @@ import Register from "./components/main/Authentication/Register";
 import Login from "./components/main/Authentication/Login";
 import Notification from "./components/notifications/Notification";
 import { useState } from "react";
+import Resetpswd from "./components/main/Authentication/Resetpswd";
 // import { isLoggedInContext } from "./context/context";
 function App() {
   const pageSize = 5;
@@ -50,6 +51,7 @@ function App() {
         ></Route>
         <Route exact path="/AboutDoctor" element={<AboutDoctor />}></Route>
         <Route exact path="/Contact" element={<Contact />}></Route>
+        <Route exact path="/resetpswd" element={<Resetpswd />}></Route>
       </Switch>
     </>
   );

@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 // import LoginButton from "../main/LoginButton";
 // import LogoutButton from "../main/LogoutButton";
+import axios from "axios";
 
 function Navbar(props) {
   let isLoggedIn = props.isLoggedIn;
   let setIsLoggedIn = props.setIsLoggedIn;
+
+    const [isOpen, setIsOpen] = useState(false);
+  
+    const toggleDropdown = () => {
+      setIsOpen(!isOpen);
+    };  
+
 
   const navigate = useNavigate();
   return (
@@ -40,8 +48,8 @@ function Navbar(props) {
         </ul>
       </div>
 
-      <div className="ms-auto bg-[#D7FDF0] hover:bg-CambridgeBlue font-bold text-EnglishViolet rounded-md p-2 px-6 flex space-x-3 ">
-        {isLoggedIn && (
+      {/* <div className="ms-auto  "> */}
+        {/* {isLoggedIn && (
           <button className=" text-gray-700 cursor-pointer">Log In</button>
         )}
         {!isLoggedIn && (
@@ -55,8 +63,45 @@ function Navbar(props) {
           >
             Log Out
           </button>
-        )}
+        )} */}
+
+<div className=" ms-auto relative">
+      {/* Dropdown Toggle */}
+      <div className="flex items-center ">
+        <button
+          className="flex  text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
+          onClick={toggleDropdown}
+        >
+          <img
+            className=" w-[40px] h-[40px] rounded-full "
+            src="https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black.png"
+            alt="User"
+          />
+        </button>
       </div>
+
+      {/* Dropdown Menu */}
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-md">
+          <div className="py-1">
+            <div className="px-4 py-2 text-sm text-gray-700">User Name</div>
+            <div className="px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100">
+              Profile Settings
+            </div>
+           
+            <button onClick={()=> navigate('/login')} className=' w-full py-2 px-4 text-left text-sm text-gray-700 cursor-pointer hover:bg-gray-100'>Logout</button>
+            {/* <div className="px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100">
+              Logout
+            </div> */}
+            
+          </div>
+        </div>
+      )}
+    </div>
+
+
+
+      {/* </div> */}
     </div>
   );
 }
