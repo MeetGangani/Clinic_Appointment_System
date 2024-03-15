@@ -19,7 +19,7 @@ function AboutDoctor() {
           
           </div>
           <div className="mt-8 lg:mt-0">
-            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">Dr. John Doe</h2>
+            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">Dr. Nishant Rathod</h2>
             <p className="mt-4 text-lg text-gray-600">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut auctor nisi eget ex vehicula, nec ultrices
               velit tincidunt. Vestibulum et ornare elit. Nulla facilisi. Aliquam eget efficitur justo, non ultricies
