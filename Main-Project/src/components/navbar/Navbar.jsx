@@ -89,7 +89,7 @@ function Navbar(props) {
               Profile Settings
             </div>
            
-            <button onClick={()=> navigate('/login')} className=' w-full py-2 px-4 text-left text-sm text-gray-700 cursor-pointer hover:bg-gray-100'>Logout</button>
+            <button onClick={()=> {navigate('/login'); toast.success("Logged Out Successfully");}} className=' w-full py-2 px-4 text-left text-sm text-gray-700 cursor-pointer hover:bg-gray-100'>Logout</button>
             {/* <div className="px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100">
               Logout
             </div> */}

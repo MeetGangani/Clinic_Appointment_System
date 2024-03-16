@@ -11,7 +11,7 @@ function Contact() {
         <div className="absolute w-full h-full bg-[url('https://i.pinimg.com/736x/77/5a/b8/775ab8f7dcb36967199e17b6a02b5a9b.jpg')]  bg-[100vw_70vh] opacity-70 z-[-1]" />
         Get In Touch
       </div> */}
-      <div className="w-screen h-[500px] flex border-[solid] border-[2px]">
+      <div className=" h-[500px] flex border-[solid] border-[2px]">
         <div className=" h-[78%] w-6/12 text-xl p-[52px]">
           <div className="mb-8">
             <h2 className="flex items-center">
@@ -36,7 +36,11 @@ function Contact() {
             <p>healtheasy96@gmail.com</p>
           </div>
         </div>
-        <div className=" w-[600px]  mt-[20px] ">
+
+
+
+        {/* right side */}
+        <div className=" w-[600px]  mt-[20px]   ">
           <div className=" w-full flex flex-col items-center justify-center ">
             <h1 className=" text-[40px] ">Send Message</h1>
 
@@ -52,7 +56,7 @@ function Contact() {
                   type="email"
                   id="email"
                   className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="name@company.com"
+                  placeholder="abc@gmail.com"
                   required
                 />
               </div>
@@ -81,8 +85,9 @@ function Contact() {
                 <textarea
                   id="message"
                   rows="4"
-                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className=" p-2.5 w-full resize-none text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Your message..."
+                 
                 ></textarea>
               </div>
               <button
