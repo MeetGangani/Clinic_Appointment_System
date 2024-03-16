@@ -2,20 +2,20 @@ import React from 'react'
 
 function Footer() {
   return (
-    <div className='  bg-[#696969] h-56'>
+    <div className='  bg-gray-300 h-56'>
 
      <div className=' px-24 w-auto py-10'>
-        <ul className='grid grid-cols-3'>
-            <li>Home</li>
-            <li>About</li>
-            <li>Businesses</li>
-            <li>Social Responsibility</li>
-            <li>Investors</li>
-            <li>Newsromm</li>
-            <li>Careers</li>
-            <li>UnitedHealthcare</li>
-            <li>Optum</li>
-            <li>UnitedHealth group Ventures</li>
+        <ul className='grid grid-cols-3 '>
+            <li className=' cursor-pointer hover:underline'>Home</li>
+            <li className=' cursor-pointer hover:underline'>About</li>
+            <li className=' cursor-pointer hover:underline'>Businesses</li>
+            <li className=' cursor-pointer hover:underline'>Social Responsibility</li>
+            <li className=' cursor-pointer hover:underline'>Investors</li>
+            <li className=' cursor-pointer hover:underline'>Newsromm</li>
+            <li className=' cursor-pointer hover:underline'>Careers</li>
+            <li className=' cursor-pointer hover:underline'>UnitedHealthcare</li>
+            <li className=' cursor-pointer hover:underline'>Optum</li>
+            <li className=' cursor-pointer hover:underline'>UnitedHealth group Ventures</li>
         </ul>
      </div>
      <div className='flex space-x-5 px-24'>

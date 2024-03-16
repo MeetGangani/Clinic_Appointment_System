@@ -20,6 +20,7 @@ function Home(props) {
         <button onClick={()=> navigate('/bookappointment')} className=" text-base cursor-pointer font-medium  mt-[38px] px-[30px] py-3 rounded-md border-[none] bg-[#8AFFC1] hover:bg[#9F4A54]">Book Appointment Now</button>
       </div>
     </section>
+   
 
     <Footer/>
     </>
