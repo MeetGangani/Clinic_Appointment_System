@@ -13,7 +13,6 @@ import Contact from "./components/main/Contact";
 import News from "./components/main/News";
 import Register from "./components/main/Authentication/Register";
 import Login from "./components/main/Authentication/Login";
-import Notification from "./components/notifications/Notification";
 import { useState } from "react";
 import Resetpswd from "./components/main/Authentication/Resetpswd";
 // import { isLoggedInContext } from "./context/context";

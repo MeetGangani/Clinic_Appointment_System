@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 import { data } from "autoprefixer";
-import Notification from "../../notifications/Notification";
 import toast from "react-hot-toast";
 function Register() {
   const navigate = useNavigate();
